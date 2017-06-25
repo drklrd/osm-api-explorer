@@ -11,8 +11,9 @@ body{
 	text-align: center;
 }
 
-.no-styling{
-	text-decoration: none;
+.no-styling, .no-styling :hover{
+	color: #ffffff;
+	text-decoration: underline;
 }
 
 .version-text{
@@ -22,4 +23,12 @@ body{
 
 .title{
 	color: #ffffff;
+}
+
+.loader{
+	margin-left: 45%;
+}
+
+.pointer{
+	cursor: pointer;
 }

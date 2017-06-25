@@ -4,6 +4,7 @@ import OsmAuth from 'osm-auth';
 import AceEditor from 'react-ace';
 import xmlJSONParser from './xmljsonparser';
 import Header from './header';
+import ReactLoading from 'react-loading';
 
 var auth = OsmAuth({
     oauth_consumer_key: 'KR1p7wOfpZgQogD9KvSFIXgFqGvekW4DS6R35938',
@@ -17,6 +18,7 @@ export default class Main extends React.Component {
         super();
         this.urlRequest = this.urlRequest.bind(this);
         this.auth = this.auth.bind(this);
+        this.logout = this.logout.bind(this);
         this.state = {
             isAuthenticated : auth.authenticated(),
             editorOut : "",
@@ -51,20 +53,32 @@ export default class Main extends React.Component {
     }
 
     urlRequest(){
+        this.setState({
+            loading : true
+        });
         auth.xhr({
             method: this.refs['method'].value,
             path: this.refs['apiUrl'].value
         },function(err,response){
             this.setState({
-                editorOut : new XMLSerializer().serializeToString(response)
+                editorOut : err ? "There was an error performing the request. Make sure the URL, params and method are as expected" :  new XMLSerializer().serializeToString(response),
+                loading : false
             })
         }.bind(this));
+    }
+
+    logout(){
+        auth.logout();
+        this.setState({
+            isAuthenticated : false,
+            user : undefined
+        })
     }
 
     render(){
         return(
             <div className="container">
-                <Header user={this.state.user} />
+                <Header user={this.state.user} handleLogut={this.logout} />
                 {this.state.isAuthenticated &&
                     <div>
                         <div className="row">
@@ -88,15 +102,22 @@ export default class Main extends React.Component {
                                 <button className="btn btn-danger" onClick={this.urlRequest} > Go</button>
                             </div>
                         </div>
-                        <br></br>
-                        <div className="row">
-                            <div className="col-xs-6">
-                                <AceEditor ref="editorIn" />
+                        <br/>
+                        {!this.state.loading &&
+                            <div className="row">
+                                <div className="col-xs-6">
+                                    <AceEditor ref="editorIn" />
+                                </div>
+                                <div className="col-xs-6">
+                                    <AceEditor ref="editorOut" value={this.state.editorOut} />
+                                </div>
                             </div>
-                            <div className="col-xs-6">
-                                <AceEditor ref="editorOut" value={this.state.editorOut} />
-                            </div>
-                        </div>
+                        }
+                        {this.state.loading &&
+                            <ReactLoading className="loader" type='cubes' color='#95a5a6' height='660px' width='200px' />
+                        }
+
+
                     </div> }
 
                 {!this.state.isAuthenticated &&

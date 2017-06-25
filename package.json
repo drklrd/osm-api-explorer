@@ -21,7 +21,7 @@
     "react": "^15.5.4",
     "react-ace": "^5.0.1",
     "react-dom": "^15.5.4",
-    "react-loading": "^0.1.2",
+    "react-loading": "^0.1.4",
     "serve-favicon": "~2.3.0",
     "xml2js": "^0.4.17"
   },

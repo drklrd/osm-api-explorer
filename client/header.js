@@ -21,6 +21,8 @@ export default class Header extends React.Component{
                                 <a className="no-styling" href={`http://www.openstreetmap.org/user/${this.props.user.display_name}`} target="blank">
                                     <span>{this.props.user.display_name}</span>
                                 </a>
+                                <br/>
+                                <span className="pointer pull-right" onClick={this.props.handleLogut}>Logout</span>
                             </div>
                         }
                       </div>
