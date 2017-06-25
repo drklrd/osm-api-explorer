@@ -4,10 +4,12 @@ import AceEditor from 'react-ace';
 import OSMOauth from './OSMOauth';
 import Header from './header';
 import ReactLoading from 'react-loading';
+import QueryBar from './querybar';
 
 var auth = new OSMOauth();
 
 export default class Main extends React.Component {
+
     constructor(){
         super();
         this.urlRequest = this.urlRequest.bind(this);
@@ -36,16 +38,17 @@ export default class Main extends React.Component {
         auth.auth()
         .then(function(user){
             this.setState({
-                user : user.osm.user['0']['$']
+                user : user.osm.user['0']['$'],
+                isAuthenticated : true
             })
         }.bind(this));
     }
 
-    urlRequest(){
+    urlRequest(options){
         this.setState({
             loading : true
         });
-        auth.request({method:this.refs['method'].value,path:this.refs['apiUrl'].value})
+        auth.request(options)
         .then((response)=>{
             this.setState({
                 editorOut : new XMLSerializer().serializeToString(response),
@@ -75,27 +78,7 @@ export default class Main extends React.Component {
                 <Header user={this.state.user} handleLogut={this.logout} />
                 {this.state.isAuthenticated &&
                     <div>
-                        <div className="row">
-                            <div className="col-xs-2">
-                                <select className="form-control" ref="method">
-                                    <option value="GET">GET</option>
-                                    <option value="POST">POST</option>
-                                    <option value="PUT">PUT</option>
-                                    <option value="DELETE">DELETE</option>
-                                </select>
-                            </div>
-                            <div className="col-xs-2">
-                                <select className="form-control" ref="version">
-                                    <option value="0.6">0.6</option>
-                                </select>
-                            </div>
-                            <div className="col-xs-6">
-                                <input type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
-                            </div>
-                            <div className="col-xs-2">
-                                <button className="btn btn-danger" onClick={this.urlRequest} > Go</button>
-                            </div>
-                        </div>
+                        <QueryBar urlRequest={this.urlRequest}/>
                         <br/>
                         {!this.state.loading &&
                             <div className="row">
