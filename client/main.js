@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import OsmAuth from 'osm-auth';
 import AceEditor from 'react-ace';
 import xmlJSONParser from './xmljsonparser';
+import Header from './header';
 
 var auth = OsmAuth({
     oauth_consumer_key: 'KR1p7wOfpZgQogD9KvSFIXgFqGvekW4DS6R35938',
@@ -10,13 +11,12 @@ var auth = OsmAuth({
     auto: true
 });
 
-
-
 export default class Main extends React.Component {
 
     constructor(){
         super();
         this.urlRequest = this.urlRequest.bind(this);
+        this.auth = this.auth.bind(this);
         this.state = {
             isAuthenticated : auth.authenticated(),
             editorOut : "",
@@ -64,14 +64,7 @@ export default class Main extends React.Component {
     render(){
         return(
             <div className="container">
-                <div className="row">
-                    <h3 className="pull-left">OSM API Explorer </h3>
-                    {this.state.user &&
-                        <div className="pull-right">
-                            Logged in as {this.state.user.display_name}
-                        </div>
-                    }
-                </div>
+                <Header user={this.state.user} />
                 {this.state.isAuthenticated &&
                     <div>
                         <div className="row">
@@ -83,9 +76,13 @@ export default class Main extends React.Component {
                                     <option value="DELETE">DELETE</option>
                                 </select>
                             </div>
-                            <div className="col-xs-8">
+                            <div className="col-xs-2">
+                                <select className="form-control" ref="version">
+                                    <option value="0.6">0.6</option>
+                                </select>
+                            </div>
+                            <div className="col-xs-6">
                                 <input type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
-
                             </div>
                             <div className="col-xs-2">
                                 <button className="btn btn-danger" onClick={this.urlRequest} > Go</button>
@@ -103,13 +100,12 @@ export default class Main extends React.Component {
                     </div> }
 
                 {!this.state.isAuthenticated &&
-                    <div>
-                        <h3> You need to login to OSM to perform API requests </h3>
-                        <button className="btn btn-success" onClick={this.auth}> Auth </button>
+                    <div className="col-xs-offset-2 align-center">
+                            <strong> You need to login to OSM for testing </strong>
+                            <br/>
+                            <button className="btn btn-success" onClick={this.auth}> Login to OSM </button>
                     </div>
                 }
-
-
             </div>
         );
 

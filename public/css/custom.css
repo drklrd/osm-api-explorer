@@ -1,0 +1,25 @@
+.user-info{
+	margin : 10px;
+	color: #ffffff;
+}
+
+body{
+	padding : 10px;
+}
+
+.align-center{
+	text-align: center;
+}
+
+.no-styling{
+	text-decoration: none;
+}
+
+.version-text{
+	font-weight: bold;
+	font-size: 10px;
+}
+
+.title{
+	color: #ffffff;
+}
