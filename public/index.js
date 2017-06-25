@@ -9902,8 +9902,11 @@ var Main = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
 
+        _this.urlRequest = _this.urlRequest.bind(_this);
         _this.state = {
-            isAuthenticated: _auth.authenticated()
+            isAuthenticated: _auth.authenticated(),
+            editorOut: "",
+            editorIn: ""
         };
         return _this;
     }
@@ -9926,18 +9929,29 @@ var Main = function (_React$Component) {
                 var parser = new _xmljsonparser2.default(xmlText);
                 parser.toJSON().then(function (res) {
                     console.log('$$$', res);
-                });
-                if (!this.state.isAuthenticated) {
+                    console.log('USER');
                     this.setState({
-                        isAuthenticated: true
+                        isAuthenticated: true,
+                        user: res.osm.user['0']['$']
                     });
-                }
+                }.bind(this));
+            }.bind(this));
+        }
+    }, {
+        key: 'urlRequest',
+        value: function urlRequest() {
+            _auth.xhr({
+                method: this.refs['method'].value,
+                path: this.refs['apiUrl'].value
+            }, function (err, response) {
+                this.setState({
+                    editorOut: new XMLSerializer().serializeToString(response)
+                });
             }.bind(this));
         }
     }, {
         key: 'render',
         value: function render() {
-
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
@@ -9945,9 +9959,15 @@ var Main = function (_React$Component) {
                     'div',
                     { className: 'row' },
                     _react2.default.createElement(
-                        'h1',
-                        null,
+                        'h3',
+                        { className: 'pull-left' },
                         'OSM API Explorer '
+                    ),
+                    this.state.user && _react2.default.createElement(
+                        'div',
+                        { className: 'pull-right' },
+                        'Logged in as ',
+                        this.state.user.display_name
                     )
                 ),
                 this.state.isAuthenticated && _react2.default.createElement(
@@ -9958,22 +9978,60 @@ var Main = function (_React$Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-xs-12' },
-                            _react2.default.createElement('input', { placeholder: 'Type URL here' })
+                            { className: 'col-xs-2' },
+                            _react2.default.createElement(
+                                'select',
+                                { className: 'form-control', ref: 'method' },
+                                _react2.default.createElement(
+                                    'option',
+                                    { value: 'GET' },
+                                    'GET'
+                                ),
+                                _react2.default.createElement(
+                                    'option',
+                                    { value: 'POST' },
+                                    'POST'
+                                ),
+                                _react2.default.createElement(
+                                    'option',
+                                    { value: 'PUT' },
+                                    'PUT'
+                                ),
+                                _react2.default.createElement(
+                                    'option',
+                                    { value: 'DELETE' },
+                                    'DELETE'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-xs-8' },
+                            _react2.default.createElement('input', { type: 'text', ref: 'apiUrl', id: 'url', className: 'form-control ', placeholder: 'Type URL here' })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-xs-2' },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn btn-danger', onClick: this.urlRequest },
+                                ' Go'
+                            )
                         )
                     ),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
                             { className: 'col-xs-6' },
-                            _react2.default.createElement(_reactAce2.default, null)
+                            _react2.default.createElement(_reactAce2.default, { ref: 'editorIn' })
                         ),
                         _react2.default.createElement(
                             'div',
                             { className: 'col-xs-6' },
-                            _react2.default.createElement(_reactAce2.default, null)
+                            _react2.default.createElement(_reactAce2.default, { ref: 'editorOut', value: this.state.editorOut })
                         )
                     )
                 ),

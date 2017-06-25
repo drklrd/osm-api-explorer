@@ -16,9 +16,12 @@ export default class Main extends React.Component {
 
     constructor(){
         super();
+        this.urlRequest = this.urlRequest.bind(this);
         this.state = {
-            isAuthenticated : auth.authenticated()
-        }
+            isAuthenticated : auth.authenticated(),
+            editorOut : "",
+            editorIn : ""
+        };
     }
 
     componentDidMount(){
@@ -37,36 +40,64 @@ export default class Main extends React.Component {
             parser.toJSON()
                 .then(function(res){
                     console.log('$$$',res);
-                })
-            if(!this.state.isAuthenticated){
-                this.setState({
-                    isAuthenticated : true
-                })
-            }
+                    console.log('USER')
+                    this.setState({
+                        isAuthenticated : true,
+                        user : res.osm.user['0']['$']
+                    });
+                }.bind(this))
+
+        }.bind(this));
+    }
+
+    urlRequest(){
+        auth.xhr({
+            method: this.refs['method'].value,
+            path: this.refs['apiUrl'].value
+        },function(err,response){
+            this.setState({
+                editorOut : new XMLSerializer().serializeToString(response)
+            })
         }.bind(this));
     }
 
     render(){
-
-
         return(
             <div className="container">
                 <div className="row">
-                    <h1>OSM API Explorer </h1>
+                    <h3 className="pull-left">OSM API Explorer </h3>
+                    {this.state.user &&
+                        <div className="pull-right">
+                            Logged in as {this.state.user.display_name}
+                        </div>
+                    }
                 </div>
                 {this.state.isAuthenticated &&
                     <div>
                         <div className="row">
-                            <div className="col-xs-12">
-                                <input placeholder="Type URL here"></input>
+                            <div className="col-xs-2">
+                                <select className="form-control" ref="method">
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="DELETE">DELETE</option>
+                                </select>
+                            </div>
+                            <div className="col-xs-8">
+                                <input type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
+
+                            </div>
+                            <div className="col-xs-2">
+                                <button className="btn btn-danger" onClick={this.urlRequest} > Go</button>
                             </div>
                         </div>
+                        <br></br>
                         <div className="row">
                             <div className="col-xs-6">
-                                <AceEditor />
+                                <AceEditor ref="editorIn" />
                             </div>
                             <div className="col-xs-6">
-                                <AceEditor />
+                                <AceEditor ref="editorOut" value={this.state.editorOut} />
                             </div>
                         </div>
                     </div> }
