@@ -1,6 +1,6 @@
 import OsmAuth from 'osm-auth';
 import xmlJSONParser from './xmljsonparser';
-import config from './config';
+import config from '../config';
 
 var auth = OsmAuth(config.osmConfig);
 
