@@ -1,24 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import OsmAuth from 'osm-auth';
 import AceEditor from 'react-ace';
-import xmlJSONParser from './xmljsonparser';
+import OSMOauth from './OSMOauth';
 import Header from './header';
 import ReactLoading from 'react-loading';
 
-var auth = OsmAuth({
-    oauth_consumer_key: 'KR1p7wOfpZgQogD9KvSFIXgFqGvekW4DS6R35938',
-    oauth_secret: 'TeDF8MGmnIdAHts0Rmc6kPAvxEfNQo299BhD4Jsa',
-    auto: true
-});
+var auth = new OSMOauth();
 
 export default class Main extends React.Component {
-
     constructor(){
         super();
         this.urlRequest = this.urlRequest.bind(this);
-        this.auth = this.auth.bind(this);
         this.logout = this.logout.bind(this);
+        this.authenticate = this.authenticate.bind(this);
         this.state = {
             isAuthenticated : auth.authenticated(),
             editorOut : "",
@@ -28,27 +22,22 @@ export default class Main extends React.Component {
 
     componentDidMount(){
         if(this.state.isAuthenticated){
-            this.auth();
+            auth.auth()
+            .then(function(response){
+                this.setState({
+                    isAuthenticated : true,
+                    user : response.osm.user['0']['$']
+                });
+            }.bind(this))
         }
     }
 
-    auth(){
-        auth.xhr({
-            method: 'GET',
-            path: '/api/0.6/user/details'
-        }, function(err, details) {
-            var xmlText = new XMLSerializer().serializeToString(details);
-            var parser = new xmlJSONParser(xmlText);
-            parser.toJSON()
-                .then(function(res){
-                    console.log('$$$',res);
-                    console.log('USER')
-                    this.setState({
-                        isAuthenticated : true,
-                        user : res.osm.user['0']['$']
-                    });
-                }.bind(this))
-
+    authenticate(){
+        auth.auth()
+        .then(function(user){
+            this.setState({
+                user : user.osm.user['0']['$']
+            })
         }.bind(this));
     }
 
@@ -56,15 +45,20 @@ export default class Main extends React.Component {
         this.setState({
             loading : true
         });
-        auth.xhr({
-            method: this.refs['method'].value,
-            path: this.refs['apiUrl'].value
-        },function(err,response){
+        auth.request({method:this.refs['method'].value,path:this.refs['apiUrl'].value})
+        .then((response)=>{
             this.setState({
-                editorOut : err ? "There was an error performing the request. Make sure the URL, params and method are as expected" :  new XMLSerializer().serializeToString(response),
+                editorOut : new XMLSerializer().serializeToString(response),
+                loading : false
+            });
+        })
+        .catch((err)=>{
+            this.setState({
+                editorOut : JSON.stringify(err),
                 loading : false
             })
-        }.bind(this));
+        });
+
     }
 
     logout(){
@@ -116,15 +110,13 @@ export default class Main extends React.Component {
                         {this.state.loading &&
                             <ReactLoading className="loader" type='cubes' color='#95a5a6' height='660px' width='200px' />
                         }
-
-
                     </div> }
 
                 {!this.state.isAuthenticated &&
                     <div className="col-xs-offset-2 align-center">
-                            <strong> You need to login to OSM for testing </strong>
-                            <br/>
-                            <button className="btn btn-success" onClick={this.auth}> Login to OSM </button>
+                        <strong> You need to login to OSM for testing </strong>
+                        <br/>
+                        <button className="btn btn-success" onClick={this.authenticate}> Login to OSM </button>
                     </div>
                 }
             </div>
