@@ -30,7 +30,7 @@ export default class QueryBar extends React.Component{
                         </select>
                     </div>
                     <div className="col-xs-6">
-                        <input type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
+                        <input spellCheck="false" type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
                     </div>
                     <div className="col-xs-2">
                         <button type="submit" className="btn btn-danger"  > Go</button>

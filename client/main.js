@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AceEditor from 'react-ace';
+import brace from 'brace';
+import 'brace/mode/xml';
 import OSMOauth from './OSMOauth';
 import Header from './header';
 import ReactLoading from 'react-loading';
@@ -74,7 +76,7 @@ export default class Main extends React.Component {
 
     render(){
         return(
-            <div className="container">
+            <div className="container editor-background">
                 <Header user={this.state.user} handleLogut={this.logout} />
                 {this.state.isAuthenticated &&
                     <div>
@@ -83,10 +85,10 @@ export default class Main extends React.Component {
                         {!this.state.loading &&
                             <div className="row">
                                 <div className="col-xs-6">
-                                    <AceEditor ref="editorIn" />
+                                    <AceEditor mode="xml"  ref="editorIn" />
                                 </div>
                                 <div className="col-xs-6">
-                                    <AceEditor ref="editorOut" value={this.state.editorOut} />
+                                    <AceEditor mode="xml" ref="editorOut" value={this.state.editorOut} />
                                 </div>
                             </div>
                         }

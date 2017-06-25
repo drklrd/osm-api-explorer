@@ -16,8 +16,6 @@ export default class OSMOauth{
                 var parser = new xmlJSONParser(xmlText);
                 parser.toJSON()
                     .then(function(res){
-                        console.log('$$$',res);
-                        console.log('USER')
                         resolve(res);
                     })
             });
@@ -31,7 +29,7 @@ export default class OSMOauth{
                 method : options.method,
                 path : options.path
             },function(err,response){
-                if(err) reject(err);
+                if(err) reject(err.responseText);
                 resolve(response);
             });
         })

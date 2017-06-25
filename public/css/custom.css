@@ -32,3 +32,8 @@ body{
 .pointer{
 	cursor: pointer;
 }
+
+.editor-background{
+	background-color: #ecf0f1;
+	padding : 15px;
+}
