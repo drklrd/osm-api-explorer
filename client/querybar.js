@@ -5,11 +5,16 @@ export default class QueryBar extends React.Component{
     constructor(){
         super();
         this.urlRequest = this.urlRequest.bind(this);
+
+    }
+
+    componentDidMount(){
+        this.refs['apiUrl'].value = "/api/capabilities";
     }
 
     urlRequest(e){
         e.preventDefault();
-        this.props.urlRequest({method:this.refs['method'].value,path:this.refs['apiUrl'].value,server:this.refs['server'].value});
+        this.props.urlRequest({method:this.refs['method'].value,path:this.refs['apiUrl'].value,server:this.refs['version'].value});
     }
 
     render(){
@@ -17,17 +22,16 @@ export default class QueryBar extends React.Component{
             <form onSubmit={this.urlRequest}>
                 <div className="row">
                     <div className="col-xs-2">
+                        <select className="form-control" ref="version">
+                            <option value="0.6">0.6</option>
+                        </select>
+                    </div>
+                    <div className="col-xs-2">
                         <select className="form-control" ref="method">
                             <option value="GET">GET</option>
                             <option value="POST">POST</option>
                             <option value="PUT">PUT</option>
                             <option value="DELETE">DELETE</option>
-                        </select>
-                    </div>
-                    <div className="col-xs-2">
-                        <select className="form-control" ref="server">
-                            <option value="live">Live Server</option>
-                            <option value="dev">Dev Server</option>
                         </select>
                     </div>
                     <div className="col-xs-6">

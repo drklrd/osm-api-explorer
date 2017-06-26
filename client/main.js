@@ -90,7 +90,7 @@ export default class Main extends React.Component {
 
     render(){
         return(
-            <div className="container editor-background">
+            <div className="editor-background">
                 <Header user={this.state.user} handleLogut={this.logout} />
                 {this.state.isAuthenticated &&
                     <div>
@@ -101,12 +101,12 @@ export default class Main extends React.Component {
                                 <div className="col-xs-6">
                                     <strong className="editor-title">Request XML </strong>
                                     <br/>
-                                    <AceEditor mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
+                                    <AceEditor width="100%"  mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
                                 </div>
                                 <div className="col-xs-6">
                                     <strong  className="editor-title">Response XML(or plain text) </strong>
                                     <br/>
-                                    <AceEditor mode="xml" ref="editorOut" value={this.state.editorOut} />
+                                    <AceEditor width="100%" mode="xml" ref="editorOut" value={this.state.editorOut} />
                                 </div>
                             </div>
                         }
@@ -117,8 +117,9 @@ export default class Main extends React.Component {
 
                 {!this.state.isAuthenticated &&
                     <div className="col-xs-offset-1 align-center">
-                        <strong> You need to login to OSM for testing </strong>
-                        <br/>
+                        <h3><strong> You need to login to OSM for this.</strong></h3>
+                        <span className="authentication">The authentication will be done via Oauth1.0</span>
+                        <p/>
                         <button className="btn btn-success" onClick={this.authenticate}> Login to OSM </button>
                     </div>
                 }
