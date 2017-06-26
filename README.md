@@ -2,6 +2,10 @@
 
 This is a simple tool to explore OSM API. This uses osm-auth (https://github.com/osmlab/osm-auth) for OSM authentication. The editor used is the Ace-editor(https://ace.c9.io/).
 
+# LIVE Demo
+
+View the demo at : http://osm-api-explorer.herokuapp.com/
+
 ![Explorer Image](https://raw.githubusercontent.com/drklrd/osm-api-explorer/master/osm-api-explorer.png)
 
 ### Installation
