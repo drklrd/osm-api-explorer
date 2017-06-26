@@ -9,7 +9,7 @@ export default class QueryBar extends React.Component{
 
     urlRequest(e){
         e.preventDefault();
-        this.props.urlRequest({method:this.refs['method'].value,path:this.refs['apiUrl'].value});
+        this.props.urlRequest({method:this.refs['method'].value,path:this.refs['apiUrl'].value,server:this.refs['server'].value});
     }
 
     render(){
@@ -25,12 +25,13 @@ export default class QueryBar extends React.Component{
                         </select>
                     </div>
                     <div className="col-xs-2">
-                        <select className="form-control" ref="version">
-                            <option value="0.6">0.6</option>
+                        <select className="form-control" ref="server">
+                            <option value="live">Live Server</option>
+                            <option value="dev">Dev Server</option>
                         </select>
                     </div>
                     <div className="col-xs-6">
-                        <input spellCheck="false" type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
+                        <input autoComplete="false"  spellCheck="false" type="text" ref="apiUrl" id="url" className="form-control " placeholder="Type URL here"></input>
                     </div>
                     <div className="col-xs-2">
                         <button type="submit" className="btn btn-danger"  > Go</button>

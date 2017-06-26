@@ -35,5 +35,15 @@ body{
 
 .editor-background{
 	background-color: #ecf0f1;
-	padding : 15px;
+	padding : 10px;
+
+}
+
+.btn {
+	border-radius: 0px;
+}
+
+.editor-title{
+	margin-left: 40%;
+	color : #7f8c8d;
 }

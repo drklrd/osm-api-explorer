@@ -27,9 +27,15 @@ export default class OSMOauth{
         return new Promise((resolve,reject)=>{
             auth.xhr({
                 method : options.method,
-                path : options.path
+                path : options.path,
+                content: options.xml,
+                options: {
+                    "header": {
+                        "Content-Type": "text/xml"
+                    }
+                }
             },function(err,response){
-                if(err) reject(err.responseText);
+                if(err) reject(err.responseText || "Error in reqest. Make sure the method, params and URL are as expected !");
                 resolve(response);
             });
         })

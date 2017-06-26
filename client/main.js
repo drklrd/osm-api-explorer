@@ -17,6 +17,7 @@ export default class Main extends React.Component {
         this.urlRequest = this.urlRequest.bind(this);
         this.logout = this.logout.bind(this);
         this.authenticate = this.authenticate.bind(this);
+        this.handleInEditorChange = this.handleInEditorChange.bind(this);
         this.state = {
             isAuthenticated : auth.authenticated(),
             editorOut : "",
@@ -47,13 +48,14 @@ export default class Main extends React.Component {
     }
 
     urlRequest(options){
+        if(this.state['editorIn']) options.xml = this.state['editorIn'];
         this.setState({
             loading : true
         });
         auth.request(options)
         .then((response)=>{
             this.setState({
-                editorOut : new XMLSerializer().serializeToString(response),
+                editorOut : typeof response === "string" ? response :  new XMLSerializer().serializeToString(response),
                 loading : false
             });
         })
@@ -74,6 +76,12 @@ export default class Main extends React.Component {
         })
     }
 
+    handleInEditorChange(value){
+        this.setState({
+            editorIn : value
+        })
+    }
+
     render(){
         return(
             <div className="container editor-background">
@@ -85,9 +93,13 @@ export default class Main extends React.Component {
                         {!this.state.loading &&
                             <div className="row">
                                 <div className="col-xs-6">
-                                    <AceEditor mode="xml"  ref="editorIn" />
+                                    <strong className="editor-title">Request XML </strong>
+                                    <br/>
+                                    <AceEditor mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
                                 </div>
                                 <div className="col-xs-6">
+                                    <strong  className="editor-title">Response XML(or plain text) </strong>
+                                    <br/>
                                     <AceEditor mode="xml" ref="editorOut" value={this.state.editorOut} />
                                 </div>
                             </div>
@@ -98,7 +110,7 @@ export default class Main extends React.Component {
                     </div> }
 
                 {!this.state.isAuthenticated &&
-                    <div className="col-xs-offset-2 align-center">
+                    <div className="col-xs-offset-1 align-center">
                         <strong> You need to login to OSM for testing </strong>
                         <br/>
                         <button className="btn btn-success" onClick={this.authenticate}> Login to OSM </button>
