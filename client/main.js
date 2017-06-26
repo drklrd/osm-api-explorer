@@ -7,8 +7,14 @@ import OSMOauth from './OSMOauth';
 import Header from './header';
 import ReactLoading from 'react-loading';
 import QueryBar from './querybar';
+import Axios from 'axios';
 
-var auth = new OSMOauth();
+var auth;
+Axios.get('/config')
+.then(function(config){
+    auth = new OSMOauth(config.data);
+    ReactDOM.render(<Main />, document.getElementById('app'));
+})
 
 export default class Main extends React.Component {
 
@@ -121,5 +127,3 @@ export default class Main extends React.Component {
 
     }
 }
-
-ReactDOM.render(<Main />, document.getElementById('app'));

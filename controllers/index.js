@@ -1,35 +1,20 @@
-var appRootPath = require('app-root-path');
-var fs = require('fs');
-var moment = require('moment');
+try{
+	var config = require('../config.js');
+}
+catch(e){
+	console.log('Config file not found !');
+}
 
 module.exports = function(router) {
-
-	router.get('/audio/list', function(req, res, next) {
-		
-		var filesObj = [];
-		var files = fs.readdirSync(appRootPath + '/recordings').forEach(filename => {
-			var birthtime = fs.statSync(appRootPath + `/recordings/${filename}`).birthtime;
-			filesObj.push({
-				filename,
-				createdAt: moment(birthtime).format('YYYY-MM-DD')
+	router.get('/config',function(req,res){
+		if(process.env.oauth_consumer_key && process.env.oauth_secret && process.env.auto){
+			res.json({
+				oauth_consumer_key : process.env.oauth_consumer_key,
+				oauth_secret : process.env.oauth_secret,
+				auto : process.env.auto
 			})
-		})
-		return res.json({
-			success: 1,
-			files: filesObj
-		})
-
-	});
-
-	router.get('/audio/:filename', function(req, res, next) {
-
-		var attemptedFilePath = appRootPath + `/recordings/${req.params.filename}`;
-		if(fs.existsSync(attemptedFilePath)){
-			return res.sendFile(attemptedFilePath);
 		}else{
-			return res.sendStatus(404);
+			res.json(config.osmConfig);
 		}
-
 	});
-
 }

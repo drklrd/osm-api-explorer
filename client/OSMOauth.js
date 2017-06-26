@@ -2,9 +2,13 @@ import OsmAuth from 'osm-auth';
 import xmlJSONParser from './xmljsonparser';
 import config from '../config';
 
-var auth = OsmAuth(config.osmConfig);
+var auth;
 
 export default class OSMOauth{
+
+    constructor(config){
+        auth = OsmAuth(config);
+    }
 
     auth(){
         return new Promise((resolve,reject)=>{
