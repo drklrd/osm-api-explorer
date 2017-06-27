@@ -46,8 +46,19 @@ body{
 .editor-title{
 	margin-left: 40%;
 	color : #7f8c8d;
+	font-weight: bold;
 }
 
 .authentication{
 	font-size:12px;
+}
+
+.refer{
+	color : #7f8c8d;
+	margin-left: 3%;
+	font-weight: bold;
+}
+
+.osm-api-link, .osm-api-link:hover{
+	color : #338CD5;
 }

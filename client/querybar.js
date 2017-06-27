@@ -10,6 +10,7 @@ export default class QueryBar extends React.Component{
 
     componentDidMount(){
         this.refs['apiUrl'].value = "/api/capabilities";
+        this.props.urlRequest({method:this.refs['method'].value,path:this.refs['apiUrl'].value,server:this.refs['version'].value});
     }
 
     urlRequest(e){
@@ -23,7 +24,7 @@ export default class QueryBar extends React.Component{
                 <div className="row">
                     <div className="col-xs-2">
                         <select className="form-control" ref="version">
-                            <option value="0.6">0.6</option>
+                            <option value="0.6">API Version - 0.6</option>
                         </select>
                     </div>
                     <div className="col-xs-2">

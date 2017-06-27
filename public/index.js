@@ -38983,6 +38983,7 @@ var QueryBar = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.refs['apiUrl'].value = "/api/capabilities";
+            this.props.urlRequest({ method: this.refs['method'].value, path: this.refs['apiUrl'].value, server: this.refs['version'].value });
         }
     }, {
         key: 'urlRequest',
@@ -39008,7 +39009,7 @@ var QueryBar = function (_React$Component) {
                             _react2.default.createElement(
                                 'option',
                                 { value: '0.6' },
-                                '0.6'
+                                'API Version - 0.6'
                             )
                         )
                     ),
@@ -45885,29 +45886,46 @@ var Main = function (_React$Component) {
                     _react2.default.createElement('br', null),
                     !this.state.loading && _react2.default.createElement(
                         'div',
-                        { className: 'row' },
+                        null,
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-xs-6' },
+                            { className: 'row' },
                             _react2.default.createElement(
-                                'strong',
-                                { className: 'editor-title' },
-                                'Request XML '
+                                'div',
+                                { className: 'col-xs-6' },
+                                _react2.default.createElement(
+                                    'strong',
+                                    { className: 'editor-title' },
+                                    'Request XML '
+                                ),
+                                _react2.default.createElement('br', null),
+                                _react2.default.createElement(_reactAce2.default, { showGutter: true, width: '100%', height: '75vh', mode: 'xml', onChange: this.handleInEditorChange, value: this.state.editorIn, ref: 'editorIn' })
                             ),
-                            _react2.default.createElement('br', null),
-                            _react2.default.createElement(_reactAce2.default, { width: '100%', mode: 'xml', onChange: this.handleInEditorChange, value: this.state.editorIn, ref: 'editorIn' })
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-xs-6' },
+                                _react2.default.createElement(
+                                    'strong',
+                                    { className: 'editor-title' },
+                                    'Response XML(or plain text) '
+                                ),
+                                _react2.default.createElement('br', null),
+                                _react2.default.createElement(_reactAce2.default, { showGutter: true, width: '100%', height: '75vh', mode: 'xml', ref: 'editorOut', value: this.state.editorOut })
+                            )
                         ),
+                        _react2.default.createElement('br', null),
                         _react2.default.createElement(
-                            'div',
-                            { className: 'col-xs-6' },
+                            'span',
+                            { className: 'refer' },
+                            'Refer to OSM API wiki for the available API endpoints, expected attributes and request/response format\xA0[',
                             _react2.default.createElement(
-                                'strong',
-                                { className: 'editor-title' },
-                                'Response XML(or plain text) '
+                                'a',
+                                { className: 'pointer osm-api-link', href: 'http://wiki.openstreetmap.org/wiki/API_v0.6', target: 'blank' },
+                                'http://wiki.openstreetmap.org/wiki/API_v0.6'
                             ),
-                            _react2.default.createElement('br', null),
-                            _react2.default.createElement(_reactAce2.default, { width: '100%', mode: 'xml', ref: 'editorOut', value: this.state.editorOut })
-                        )
+                            ']'
+                        ),
+                        _react2.default.createElement('p', null)
                     ),
                     this.state.loading && _react2.default.createElement(_reactLoading2.default, { className: 'loader', type: 'cubes', color: '#95a5a6', height: '660px', width: '200px' })
                 ),

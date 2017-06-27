@@ -97,17 +97,25 @@ export default class Main extends React.Component {
                         <QueryBar urlRequest={this.urlRequest}/>
                         <br/>
                         {!this.state.loading &&
-                            <div className="row">
-                                <div className="col-xs-6">
-                                    <strong className="editor-title">Request XML </strong>
-                                    <br/>
-                                    <AceEditor width="100%"  mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
+                            <div>
+                                <div className="row">
+                                    <div className="col-xs-6">
+                                        <strong className="editor-title">Request XML </strong>
+                                        <br/>
+                                        <AceEditor showGutter={true} width="100%" height="75vh"  mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
+                                    </div>
+                                    <div className="col-xs-6">
+                                        <strong  className="editor-title">Response XML(or plain text) </strong>
+                                        <br/>
+                                        <AceEditor showGutter={true} width="100%" height="75vh" mode="xml" ref="editorOut" value={this.state.editorOut} />
+                                    </div>
                                 </div>
-                                <div className="col-xs-6">
-                                    <strong  className="editor-title">Response XML(or plain text) </strong>
-                                    <br/>
-                                    <AceEditor width="100%" mode="xml" ref="editorOut" value={this.state.editorOut} />
-                                </div>
+                                <br/>
+                                <span className="refer" >Refer to OSM API wiki for the available API endpoints, expected attributes and request/response format&nbsp;[
+                                    <a className="pointer osm-api-link" href="http://wiki.openstreetmap.org/wiki/API_v0.6" target="blank">http://wiki.openstreetmap.org/wiki/API_v0.6</a>
+                                    ]
+                                </span>
+                                <p/>
                             </div>
                         }
                         {this.state.loading &&
