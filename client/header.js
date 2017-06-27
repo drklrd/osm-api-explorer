@@ -17,11 +17,13 @@ export default class Header extends React.Component{
                         {this.props.user &&
                             <div className="pull-right user-info">
                                 <span className="glyphicon glyphicon-user"></span> &nbsp;
-                                Logged in as &nbsp;
-                                <a className="no-styling" href={`http://www.openstreetmap.org/user/${this.props.user.display_name}`} target="blank">
-                                    <span>{this.props.user.display_name}</span>
-                                </a>
-                                <br/>
+                                <span >
+                                    #{this.props.user.id} &nbsp; 
+                                    <a href={`http://www.openstreetmap.org/user/${this.props.user.display_name}`} target="blank" className="no-styling">{this.props.user.display_name}  </a>
+                                    <br/>
+                                </span>
+
+
                                 <span className="pointer pull-right" onClick={this.props.handleLogut}>Logout</span>
                             </div>
                         }

@@ -38909,17 +38909,21 @@ var Header = function (_React$Component) {
                             "div",
                             { className: "pull-right user-info" },
                             _react2.default.createElement("span", { className: "glyphicon glyphicon-user" }),
-                            " \xA0 Logged in as \xA0",
+                            " \xA0",
                             _react2.default.createElement(
-                                "a",
-                                { className: "no-styling", href: "http://www.openstreetmap.org/user/" + this.props.user.display_name, target: "blank" },
+                                "span",
+                                null,
+                                "#",
+                                this.props.user.id,
+                                " \xA0",
                                 _react2.default.createElement(
-                                    "span",
-                                    null,
-                                    this.props.user.display_name
-                                )
+                                    "a",
+                                    { href: "http://www.openstreetmap.org/user/" + this.props.user.display_name, target: "blank", className: "no-styling" },
+                                    this.props.user.display_name,
+                                    "  "
+                                ),
+                                _react2.default.createElement("br", null)
                             ),
-                            _react2.default.createElement("br", null),
                             _react2.default.createElement(
                                 "span",
                                 { className: "pointer pull-right", onClick: this.props.handleLogut },
