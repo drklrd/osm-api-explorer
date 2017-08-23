@@ -8,8 +8,9 @@ import Header from './header';
 import ReactLoading from 'react-loading';
 import QueryBar from './querybar';
 import Axios from 'axios';
+import Login from './login';
 
-var auth;
+let auth;
 Axios.get('/config')
 .then(function(config){
     auth = new OSMOauth(config.data);
@@ -124,12 +125,7 @@ export default class Main extends React.Component {
                     </div> }
 
                 {!this.state.isAuthenticated &&
-                    <div className="col-xs-offset-1 align-center">
-                        <h3><strong> You need to login to OSM for this.</strong></h3>
-                        <span className="authentication">The authentication will be done via Oauth1.0</span>
-                        <p/>
-                        <button className="btn btn-success" onClick={this.authenticate}> Login to OSM </button>
-                    </div>
+                    <Login authenticate={this.authenticate.bind(this)} />
                 }
             </div>
         );

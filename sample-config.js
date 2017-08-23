@@ -1,7 +1,7 @@
 module.exports = {
 	osmConfig : {
-		oauth_consumer_key: 'your consumer key',
-		oauth_secret: 'your secret key',
+		oauth_consumer_key: 'your dev server consumer key',
+		oauth_secret: 'your dev server  secret key',
 		auto: true
 	}
 };

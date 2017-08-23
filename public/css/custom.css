@@ -62,3 +62,8 @@ body{
 .osm-api-link, .osm-api-link:hover{
 	color : #338CD5;
 }
+
+.dev-server{
+	color : #c0392b;
+	margin:7px;
+}

@@ -11,6 +11,6 @@ View the demo at : http://osm-api-explorer.herokuapp.com/
 ### Installation
 ```sh
     $ npm install
-    $ cp sample-config.js config.js and modify config.js according your OSM app details
+    $ cp sample-config.js config.js and modify config.js according your OSM app details (dev server)
     $ npm run development && node server.js
 ```
