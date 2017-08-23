@@ -11,7 +11,8 @@ module.exports = function(router) {
 			res.json({
 				oauth_consumer_key : process.env.oauth_consumer_key,
 				oauth_secret : process.env.oauth_secret,
-				auto : process.env.auto
+				auto : process.env.auto,
+				url : 'https://master.apis.dev.openstreetmap.org'
 			})
 		}else{
 			res.json(config.osmConfig);
