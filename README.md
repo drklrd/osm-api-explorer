@@ -11,6 +11,12 @@ View the demo at : http://osm-api-explorer.herokuapp.com/
 ### Installation
 ```sh
     $ npm install
-    $ cp sample-config.js config.js and modify config.js according your OSM app details (dev server)
-    $ npm run development && node server.js
+    $ cp sample-config.js config.js
 ```
+and modify config.js according your OSM app details (DEV server)
+
+```sh
+    $ npm run development (in one terminal)
+    $ node server.js (in another terminal)
+```
+'npm run development' in one terminal to start the client side bundling and 'node server.js' in another terminal to start the node server.
