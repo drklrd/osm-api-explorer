@@ -1,6 +1,7 @@
 # OSM API Explorer
 
 This is a simple tool to explore OSM API. This uses osm-auth (https://github.com/osmlab/osm-auth) for OSM authentication. The editor used is the Ace-editor(https://ace.c9.io/).
+This uses OSM dev server as a testing environment to prevent unnecessary data/modification on LIVE server. The account used for OSM LIVE server and DEV server are different. You need to have a DEV server account for this tool. If you don't have DEV server account, create one by visiting http://master.apis.dev.openstreetmap.org/
 
 # LIVE Demo
 
