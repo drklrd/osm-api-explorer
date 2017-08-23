@@ -38972,10 +38972,23 @@ var Login = function (_Component) {
     function Login() {
         _classCallCheck(this, Login);
 
-        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
+
+        _this.state = {
+            purpose: false
+        };
+        _this.showPurpose = _this.showPurpose.bind(_this);
+        return _this;
     }
 
     _createClass(Login, [{
+        key: "showPurpose",
+        value: function showPurpose() {
+            this.setState({
+                purpose: !this.state.purpose
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -39010,6 +39023,7 @@ var Login = function (_Component) {
                     "The account for OSM LIVE server and OSM DEV server are different. You need to have DEV server account in order to use this tool. "
                 ),
                 _react2.default.createElement("p", null),
+                _react2.default.createElement("br", null),
                 _react2.default.createElement(
                     "button",
                     { className: "btn btn-success", onClick: this.props.authenticate },
@@ -39020,6 +39034,30 @@ var Login = function (_Component) {
                     "span",
                     { className: "authentication" },
                     "The authentication will be done via Oauth1.0"
+                ),
+                _react2.default.createElement("p", null),
+                _react2.default.createElement(
+                    "div",
+                    { className: "purpose" },
+                    _react2.default.createElement(
+                        "a",
+                        { onClick: this.showPurpose },
+                        _react2.default.createElement("span", { className: "glyphicon glyphicon-info-sign" }),
+                        _react2.default.createElement(
+                            "strong",
+                            null,
+                            " About this tool "
+                        )
+                    ),
+                    this.state.purpose && _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "span",
+                            null,
+                            "When we need to develop any OSM related app and use the OSM API endpoints, we need to be sure about the requests and responses format. Also before implementing on the actual app, it is advisable to test it somewhere. This tool will help in testing out the API endpoints more easily on DEV server. This is actually a REST client solely for the OSM API endpoints. This uses DEV server to prevent unnecessary test data/modifications on LIVE server."
+                        )
+                    )
                 )
             );
         }
