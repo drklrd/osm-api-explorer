@@ -38854,6 +38854,10 @@ var _react = __webpack_require__(26);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _forkMe = __webpack_require__(423);
+
+var _forkMe2 = _interopRequireDefault(_forkMe);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38874,60 +38878,61 @@ var Header = function (_React$Component) {
     }
 
     _createClass(Header, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                "div",
+                'div',
                 null,
+                _react2.default.createElement(_forkMe2.default, null),
                 _react2.default.createElement(
-                    "nav",
-                    { className: "navbar navbar-inverse" },
+                    'nav',
+                    { className: 'navbar navbar-inverse' },
                     _react2.default.createElement(
-                        "div",
-                        { className: "container-fluid" },
+                        'div',
+                        { className: 'container-fluid' },
                         _react2.default.createElement(
-                            "div",
-                            { className: "navbar-header" },
+                            'div',
+                            { className: 'navbar-header' },
                             _react2.default.createElement(
-                                "a",
-                                { className: "navbar-brand" },
+                                'a',
+                                { className: 'navbar-brand' },
                                 _react2.default.createElement(
-                                    "span",
-                                    { className: "title" },
-                                    "OSM API Explorer"
+                                    'span',
+                                    { className: 'title' },
+                                    'OSM API Explorer'
                                 ),
                                 _react2.default.createElement(
-                                    "span",
-                                    { className: "version-text" },
-                                    " ",
+                                    'span',
+                                    { className: 'version-text' },
+                                    ' ',
                                     version,
-                                    " "
+                                    ' '
                                 )
                             )
                         ),
                         this.props.user && _react2.default.createElement(
-                            "div",
-                            { className: "pull-right user-info" },
-                            _react2.default.createElement("span", { className: "glyphicon glyphicon-user" }),
-                            " \xA0",
+                            'div',
+                            { className: 'pull-right user-info' },
+                            _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' }),
+                            ' \xA0',
                             _react2.default.createElement(
-                                "span",
+                                'span',
                                 null,
-                                "#",
+                                '#',
                                 this.props.user.id,
-                                " \xA0",
+                                ' \xA0',
                                 _react2.default.createElement(
-                                    "a",
-                                    { href: "http://www.openstreetmap.org/user/" + this.props.user.display_name, target: "blank", className: "no-styling" },
+                                    'a',
+                                    { href: 'http://www.openstreetmap.org/user/' + this.props.user.display_name, target: 'blank', className: 'no-styling' },
                                     this.props.user.display_name,
-                                    "  "
+                                    '  '
                                 ),
-                                _react2.default.createElement("br", null)
+                                _react2.default.createElement('br', null)
                             ),
                             _react2.default.createElement(
-                                "span",
-                                { className: "pointer pull-right", onClick: this.props.handleLogut },
-                                "Logout"
+                                'span',
+                                { className: 'pointer pull-right', onClick: this.props.handleLogut },
+                                'Logout'
                             )
                         )
                     )
@@ -69479,6 +69484,64 @@ function get_blob() {
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 423 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(26);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ForkMe = function (_Component) {
+    _inherits(ForkMe, _Component);
+
+    function ForkMe() {
+        _classCallCheck(this, ForkMe);
+
+        return _possibleConstructorReturn(this, (ForkMe.__proto__ || Object.getPrototypeOf(ForkMe)).apply(this, arguments));
+    }
+
+    _createClass(ForkMe, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "a",
+                    { href: "https://github.com/drklrd/osm-api-explorer", target: "_blank" },
+                    _react2.default.createElement("img", {
+                        className: "fork-me",
+                        src: "https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67",
+                        alt: "Fork me on GitHub",
+                        "data-canonical-src": "https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" })
+                )
+            );
+        }
+    }]);
+
+    return ForkMe;
+}(_react.Component);
+
+exports.default = ForkMe;
 
 /***/ })
 /******/ ]);
