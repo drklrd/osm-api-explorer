@@ -18,4 +18,26 @@ module.exports = function(router) {
 			res.json(config.osmConfig);
 		}
 	});
+
+	router.get('/api/v1/stats/:user',function(req,res){
+		if(!process.env.apiURL) {
+			res.json({
+				success : 0
+			})
+		}else{
+			process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+			var request = require('request');
+			request(`${process.env.apiURL}/${req.params.user}`, function (error, response, body) {
+			  if(error) res.json({
+			  	success : 0,
+			  	message : error
+			  })
+			  body = JSON.parse(body);
+			  body.success = 1;
+			  res.json(body);
+			});
+		}
+		
+
+	});
 }
