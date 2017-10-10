@@ -57,8 +57,10 @@ module.exports = function(router) {
 			  	message : error
 			  })
 			  body = JSON.parse(body);
-			  body.success = 1;
-			  res.json(body);
+			  res.json({
+			  	success : 1,
+			  	leaderboard : body
+			  });
 			});
 
 
