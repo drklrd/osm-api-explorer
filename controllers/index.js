@@ -6,6 +6,7 @@ catch(e){
 }
 
 var request = require('request');
+var hashtags = require('./hashtags');
 
 module.exports = function(router) {
 	router.get('/config',function(req,res){
@@ -66,5 +67,12 @@ module.exports = function(router) {
 
 		}
 
+	});
+
+	router.get('/api/v1/hashtags',function(req,res){
+		res.json({
+			success : 1,
+			hashtags : hashtags.hashtags
+		});
 	})
 }
