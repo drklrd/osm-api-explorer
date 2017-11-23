@@ -52,9 +52,10 @@ body{
 }
 
 .editor-title{
-	margin-left: 40%;
+	margin-left: 30%;
 	color : #7f8c8d;
 	font-weight: bold;
+    cursor: pointer;
 }
 
 .authentication{
@@ -87,4 +88,8 @@ body{
 	left: 0;
 	border: 0;
 	z-index: 1000;
+}
+
+.suggest-toggle{
+    font-size: 10px;
 }

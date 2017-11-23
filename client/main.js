@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import AceEditor from 'react-ace';
 import brace from 'brace';
 import 'brace/mode/xml';
+import 'brace/theme/monokai';
 import OSMOauth from './OSMOauth';
 import Header from './header';
 import ReactLoading from 'react-loading';
 import QueryBar from './querybar';
 import Axios from 'axios';
 import Login from './login';
+import XMLJSON from './xmljsonparser';
 
 let auth;
 Axios.get('/config')
@@ -25,10 +27,15 @@ export default class Main extends React.Component {
         this.logout = this.logout.bind(this);
         this.authenticate = this.authenticate.bind(this);
         this.handleInEditorChange = this.handleInEditorChange.bind(this);
+        this.toggleJSONXML = this.toggleJSONXML.bind(this);
         this.state = {
             isAuthenticated : auth.authenticated(),
             editorOut : "",
-            editorIn : ""
+            editorIn : "",
+            editorOutputMode : {
+                editorIn : 'xml',
+                editorOut : 'xml'
+            }
         };
     }
 
@@ -89,6 +96,35 @@ export default class Main extends React.Component {
         })
     }
 
+    toggleJSONXML(editor){
+        try{
+            if(!(this.state[editor] && this.state[editor].length)) return;
+            let outputMode = this.state.editorOutputMode;
+            if(this.state.editorOutputMode[editor] === 'xml'){
+                let xmltoJson = new XMLJSON(this.state[editor]);
+                xmltoJson.toJSON()
+                    .then((converted)=>{
+                        outputMode[editor] = 'json';
+                        this.setState({
+                            [editor] : JSON.stringify(converted,null,'\t'),
+                            editorOutputMode : outputMode
+                        })
+                    })
+            }else{
+                let xmltoJson = new XMLJSON(JSON.parse(this.state[editor]));
+                let converted = xmltoJson.toXML();
+                outputMode[editor] = 'xml';
+                this.setState({
+                    [editor] : typeof converted === "string" ? converted :  new XMLSerializer().serializeToString(converted),
+                    editorOutputMode : outputMode
+                })
+            }
+        }
+        catch(e){
+            alert('Make sure the data can not in right format to eb toggled !');
+        }
+    }
+
     render(){
         return(
             <div className="editor-background">
@@ -101,14 +137,16 @@ export default class Main extends React.Component {
                             <div>
                                 <div className="row">
                                     <div className="col-xs-6">
-                                        <strong className="editor-title">Request XML </strong>
+                                        <strong onClick={()=>{this.toggleJSONXML('editorIn')}} className="editor-title">Request XML <span className="suggest-toggle">(Click to toggle between XML and JSON format, whereever applicable)</span> </strong>
                                         <br/>
-                                        <AceEditor showGutter={true} width="100%" height="75vh"  mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
+                                        <AceEditor
+                                        theme="monokai" showGutter={true} width="100%" height="75vh"  mode="xml"  onChange={this.handleInEditorChange} value={this.state.editorIn} ref="editorIn" />
                                     </div>
                                     <div className="col-xs-6">
-                                        <strong  className="editor-title">Response XML(or plain text) </strong>
+                                        <strong  onClick={()=>{this.toggleJSONXML('editorOut')}} className="editor-title">Response XML/Plain text <span className="suggest-toggle">(Click to toggle between XML and JSON format, whereever applicable)</span> </strong>
                                         <br/>
-                                        <AceEditor showGutter={true} width="100%" height="75vh" mode="xml" ref="editorOut" value={this.state.editorOut} />
+                                        <AceEditor
+                                        theme="monokai"  showGutter={true} width="100%" height="75vh" mode="xml" ref="editorOut" value={this.state.editorOut} />
                                     </div>
                                 </div>
                                 <br/>
